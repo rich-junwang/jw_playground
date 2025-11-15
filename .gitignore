@@ -1,0 +1,34 @@
+# build
+build/
+cmake-build-debug/
+
+# ide
+.vscode/
+.idea/
+
+# clangd
+.cache/
+
+# trace output
+# *.pt.trace.json.gz
+
+# python
+__pycache__/
+*.egg-info
+*.so
+compile_commands.json
+
+# profiler
+*.nsys-rep
+*.ncu-rep
+*.sqlite
+
+# logs
+wandb/
+*.pt.trace.json.gz
+
+# node
+node_modules/
+
+# macOS
+.DS_Store
