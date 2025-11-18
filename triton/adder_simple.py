@@ -22,6 +22,9 @@ y = torch.randn(N, device='cuda')
 out = torch.empty_like(x)
 
 # Define grid and launch kernel
+# notice that here BLOCK_SIZE is set by user. triton.cdiv(n_cols, BLOCK_SIZE) is needed when we split a single row across multiple blocks (i.e., BLOCK_SIZE < n_cols or we deliberately shard columns).
+
+# In softmax and matmul cases, BLOCK_SIZE = triton.next_power_of_2(n_cols), BLOCK_SIZE is always larger than n_cols, so a single block can cover the entire row.
 grid = lambda meta: (triton.cdiv(N, meta['BLOCK_SIZE']),)
 add_kernel[grid](x, y, out, N, BLOCK_SIZE=32)
 
