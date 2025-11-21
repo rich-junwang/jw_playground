@@ -1,4 +1,36 @@
+import os
 from contextlib import contextmanager
+
+
+@contextmanager
+def temp_env_var(key: str, value: str):
+    """Context manager for temporarily setting an environment variable.
+
+    This context manager ensures that environment variables are properly set and restored,
+    even if an exception occurs during the execution of the code block.
+
+    Args:
+        key: Environment variable name to set
+        value: Value to set the environment variable to
+
+    Yields:
+        None
+
+    Example:
+        >>> with temp_env_var("MY_VAR", "test_value"):
+        ...     # MY_VAR is set to "test_value"
+        ...     do_something()
+        ... # MY_VAR is restored to its original value or removed if it didn't exist
+    """
+    original = os.environ.get(key)
+    os.environ[key] = value
+    try:
+        yield
+    finally:
+        if original is None:
+            os.environ.pop(key, None)
+        else:
+            os.environ[key] = original
 
 
 def demo():
@@ -74,5 +106,5 @@ def reuse_context():
 
 if __name__ == "__main__":
     demo()
-    nested_context()
-    reuse_context()
+    # nested_context()
+    # reuse_context()
