@@ -25,7 +25,8 @@ def matmul(X, Y):
     # Create a 2-D grid to iterate across rows and columns
     grid = lambda meta: (x_rows, y_cols)
     
-    Y = Y.T.contiguous() # this call transposes Y, so we can load entire columns at once.  The contiguous call ensures the tensor is reshaped in memory, too.
+    # this call transposes Y, so we can load entire columns at once.  The contiguous call ensures the tensor is reshaped in memory, too.
+    Y = Y.T.contiguous() 
     matmul_kernel[grid](X, Y, output, x_rows, x_cols, y_rows, y_cols, BLOCK_SIZE=BLOCK_SIZE, num_warps=num_warps)
     
     return output
@@ -57,7 +58,8 @@ def matmul_kernel(
     x_row = tl.load(x_ptr + x_row_offset, mask=x_mask, other=0.0) # Load the row
     y_col = tl.load(y_ptr + y_col_offset, mask=y_mask, other=0.0) # Load the column
     
-    output = tl.sum(x_row * y_col, axis=0) # Multiply and sum
+    # Multiply and sum
+    output = tl.sum(x_row * y_col, axis=0) 
      
     output_offset = (x_row_id * y_cols) + y_col_id # We're only storing a single number
     
