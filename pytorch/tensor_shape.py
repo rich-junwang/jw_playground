@@ -26,8 +26,10 @@ print("empty tensor shape", fc_empty.shape)
 # for nn.Parameter, tensor.data, torch.empty
 # when we define a shape, it's effectively defining tensor shape.
 # notice that this tensor shape is the transpose of nn.Linear shape.
-# This means that usually you'll see that
+# This means that usually you'll see that using nn.Parameter, people do
 # weight_tensor = torch.empty(output_features, input_features)
+# or
+# weight = torch.nn.Parameter(torch.empty(output_features, input_features))
 # or
 # fc = nn.Linear(input_features, output_features)
 
