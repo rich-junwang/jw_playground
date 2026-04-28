@@ -1,3 +1,6 @@
+"""
+https://mingyin0312.github.io/blog/2025/grpo/
+"""
 import os
 import re
 import math
