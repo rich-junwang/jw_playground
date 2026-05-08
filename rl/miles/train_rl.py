@@ -21,7 +21,6 @@ import matplotlib.pyplot as plt
 from gsm8k_utils import format_prompt
 
 
-
 # Download Qwen3-0.6B if not already present
 MODEL_PATH = os.environ.get("MODEL_PATH", "/opt/tiger/models/Qwen3-0.6B")
 
@@ -77,7 +76,6 @@ SGLANG_CMD = (
     f"--trust-remote-code"
 )
 print(f"Launch command:\n{SGLANG_CMD}")
-
 
 
 def _port_in_use(port):
@@ -364,8 +362,6 @@ print("Training step result:")
 for k, v in train_metrics.items():
     print(f"  {k}: {v:.6f}" if isinstance(v, float) else f"  {k}: {v}")
 
-
-
 model_info = requests.get(f"{SGLANG_URL}/model_info").json()
 print(f"Before update: SGLang weight version: {model_info.get('weight_version', 'N/A')}")
 
@@ -388,9 +384,6 @@ requests.post(f"{SGLANG_URL}/resume_memory_occupation", json={"tags": ["cuda_gra
 # Verify weight version on SGLang
 model_info = requests.get(f"{SGLANG_URL}/model_info").json()
 print(f"After update: SGLang weight version: {model_info.get('weight_version', 'N/A')}")
-
-
-
 
 
 EVAL_SIZE = 1319  # Number of test problems to evaluate on
