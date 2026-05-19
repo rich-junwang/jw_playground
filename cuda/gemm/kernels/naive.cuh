@@ -5,6 +5,11 @@
 
 #define OFFSET(row, col, ld) ((row) * (ld) + (col))
 
+// A simple matmul implementation: the idea is we are going to fill an output matrix C which is of shape [M, N].
+// Each thread will fill a value at a position of [x, y], which corresponds to the dot product of x row in A and y column in B.
+
+// Notice that the indexing in kernel is always 1-dim. We can think of it as the offset to the beginning pointer.
+
 // In naive kernel, each thread is responsible for a single element in the
 // output matrix.
 __global__ void naive_gemm_kernel(float *__restrict__ a, float *__restrict__ b,
@@ -22,3 +27,6 @@ __global__ void naive_gemm_kernel(float *__restrict__ a, float *__restrict__ b,
     c[OFFSET(m, n, N)] = sum;
   }
 }
+
+
+// Here we directly map each thread position [x, y] to the output matrix position.
